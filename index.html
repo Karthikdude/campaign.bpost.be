@@ -4,70 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hacker-Themed Webpage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             background-color: #000;
             color: #00ff00;
-            font-family: 'Courier New', Courier, monospace;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
+            font-family: 'Fira Code', monospace;
             display: flex;
             flex-direction: column;
             height: 100vh;
+            overflow: hidden;
         }
         nav {
-            background-color: #111;
-            padding: 10px;
+            background-color: rgba(17, 17, 17, 0.9);
+            padding: 15px;
             text-align: center;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 10;
+            backdrop-filter: blur(5px);
         }
         nav a {
             color: #00ff00;
-            margin: 0 15px;
+            margin: 0 20px;
             text-decoration: none;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            transition: 0.3s;
         }
         nav a:hover {
-            text-shadow: 0 0 10px #00ff00;
+            text-shadow: 0 0 15px #00ff00;
+            font-weight: bold;
         }
         .container {
             display: flex;
             flex: 1;
-            padding-top: 50px;
+            padding-top: 60px;
         }
         .left-panel, .right-panel {
             flex: 1;
-            padding: 20px;
+            padding: 30px;
             overflow-y: auto;
         }
         .left-panel {
-            background-color: #000;
-            border-right: 2px solid #00ff00;
+            border-right: 3px solid #00ff00;
         }
         .right-panel {
-            background-color: #050505;
-            border-left: 2px solid #00ff00;
+            border-left: 3px solid #00ff00;
+            text-align: center;
         }
         .terminal {
-            background-color: rgba(0, 0, 0, 0.8);
-            border: 2px solid #00ff00;
+            background-color: rgba(0, 0, 0, 0.85);
+            border: 3px solid #00ff00;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px #00ff00;
-            position: relative;
-            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 0 15px #00ff00;
+            font-size: 1.2rem;
         }
         .typing {
             white-space: nowrap;
             overflow: hidden;
             display: inline-block;
-            border-right: 2px solid #0f0;
-            font-family: 'Courier New', monospace;
-            color: #0f0;
+            border-right: 3px solid #0f0;
             animation: typing 3s steps(20) infinite alternate;
         }
         @keyframes typing {
@@ -75,78 +78,55 @@
             to { width: 100%; }
         }
         .glitch-text {
-            animation: glitch 0.3s infinite;
+            animation: glitch 0.5s infinite alternate;
+            font-size: 2rem;
+            text-shadow: 0 0 5px #00ff00, 0 0 15px #00ff00;
         }
         @keyframes glitch {
             0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(2px, -2px); }
-            60% { transform: translate(-2px, -2px); }
-            80% { transform: translate(2px, 2px); }
-            100% { transform: translate(0); }
+            25% { transform: translate(-2px, 2px); }
+            50% { transform: translate(2px, -2px); }
+            75% { transform: translate(-2px, -2px); }
+            100% { transform: translate(2px, 2px); }
         }
         .glow-button {
-            border: 1px solid #0f0;
+            border: 2px solid #0f0;
             background: transparent;
             color: #0f0;
-            padding: 10px 20px;
-            font-size: 18px;
+            padding: 12px 25px;
+            font-size: 20px;
+            font-weight: bold;
             text-transform: uppercase;
             transition: 0.3s;
-            margin-top: 20px;
+            cursor: pointer;
         }
         .glow-button:hover {
-            box-shadow: 0 0 10px #0f0, 0 0 40px #0f0;
+            box-shadow: 0 0 10px #0f0, 0 0 30px #0f0;
+            transform: scale(1.05);
         }
-        .matrix {
-            position: absolute;
+        .matrix-canvas {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            opacity: 0.5;
             z-index: -1;
-        }
-        .matrix span {
-            animation: matrix-rain linear infinite;
-            animation-duration: 2s;
-            display: block;
-            font-size: 1.5rem;
-        }
-        @keyframes matrix-rain {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-        .matrix span:nth-child(even) {
-            animation-delay: 1s;
-        }
-        .matrix span:nth-child(3n) {
-            animation-delay: 1.5s;
-        }
-        .matrix span:nth-child(4n) {
-            animation-delay: 0.5s;
+            opacity: 0.5;
         }
         p {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             margin: 10px 0;
         }
     </style>
 </head>
 <body>
+    <canvas class="matrix-canvas"></canvas>
     <nav>
         <a href="#">Home</a>
         <a href="#">Exploits</a>
         <a href="#">About</a>
         <a href="#">Contact</a>
     </nav>
-    <div class="matrix">
-        <span>010101010101010</span>
-        <span>101010101010101</span>
-        <span>001100110011001</span>
-        <span>110011001100110</span>
-        <span>010101010101010</span>
-    </div>
     <div class="container">
         <div class="left-panel">
             <div class="terminal">
@@ -164,5 +144,30 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Matrix Effect
+        const canvas = document.querySelector('.matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const columns = Math.floor(canvas.width / 20);
+        const drops = Array(columns).fill(0);
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#00ff00';
+            ctx.font = '15px Fira Code';
+            for (let i = 0; i < drops.length; i++) {
+                const text = String.fromCharCode(0x30A0 + Math.random() * 96);
+                ctx.fillText(text, i * 20, drops[i] * 20);
+                if (drops[i] * 20 > canvas.height && Math.random() > 0.95) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        };
+        setInterval(draw, 50);
+    </script>
 </body>
 </html>
