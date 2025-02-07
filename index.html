@@ -3,62 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subdomain Takeover POC</title>
+    <title>Hacker-Themed Webpage</title>
     <style>
         body {
             background-color: #000;
             color: #00ff00;
             font-family: 'Courier New', Courier, monospace;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            padding: 0;
             overflow: hidden;
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        nav {
+            background-color: #111;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 10;
+        }
+        nav a {
+            color: #00ff00;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        nav a:hover {
+            text-shadow: 0 0 10px #00ff00;
         }
         .container {
-            text-align: center;
-            animation: glitch 1s infinite;
+            display: flex;
+            flex: 1;
+            padding-top: 50px;
         }
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
-            animation: flicker 1.5s infinite;
+        .left-panel, .right-panel {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .left-panel {
+            background-color: #000;
+            border-right: 2px solid #00ff00;
+        }
+        .right-panel {
+            background-color: #050505;
+            border-left: 2px solid #00ff00;
         }
         .terminal {
             background-color: rgba(0, 0, 0, 0.8);
             border: 2px solid #00ff00;
             padding: 20px;
-            display: inline-block;
-            text-align: left;
             border-radius: 10px;
             box-shadow: 0 0 20px #00ff00;
             position: relative;
             overflow: hidden;
         }
-        .blink {
-            animation: blink 1s infinite alternate;
+        .typing {
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            border-right: 2px solid #0f0;
+            font-family: 'Courier New', monospace;
+            color: #0f0;
+            animation: typing 3s steps(20) infinite alternate;
         }
-        @keyframes blink {
-            from { opacity: 1; }
-            to { opacity: 0; }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        .glitch-text {
+            animation: glitch 0.3s infinite;
         }
         @keyframes glitch {
-            0%, 100% { text-shadow: 0.05em 0 0 red, -0.05em 0 0 cyan; }
-            20% { text-shadow: 0.05em 0 0 red, -0.05em 0 0 cyan; }
-            40% { text-shadow: 0.05em 0 0 red, -0.05em 0 0 cyan; }
-            60% { text-shadow: 0.05em 0 0 red, -0.05em 0 0 cyan; }
-            80% { text-shadow: 0.05em 0 0 red, -0.05em 0 0 cyan; }
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, -2px); }
+            80% { transform: translate(2px, 2px); }
+            100% { transform: translate(0); }
         }
-        @keyframes flicker {
-            0%, 18%, 22%, 25%, 53%, 57%, 100% {
-                text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00;
-            }
-            20%, 24%, 55% {
-                text-shadow: none;
-            }
+        .glow-button {
+            border: 1px solid #0f0;
+            background: transparent;
+            color: #0f0;
+            padding: 10px 20px;
+            font-size: 18px;
+            text-transform: uppercase;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+        .glow-button:hover {
+            box-shadow: 0 0 10px #0f0, 0 0 40px #0f0;
         }
         .matrix {
             position: absolute;
@@ -68,6 +106,7 @@
             height: 100%;
             overflow: hidden;
             opacity: 0.5;
+            z-index: -1;
         }
         .matrix span {
             animation: matrix-rain linear infinite;
@@ -95,6 +134,12 @@
     </style>
 </head>
 <body>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Exploits</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </nav>
     <div class="matrix">
         <span>010101010101010</span>
         <span>101010101010101</span>
@@ -103,12 +148,20 @@
         <span>010101010101010</span>
     </div>
     <div class="container">
-        <h1>Subdomain Takeover Successful</h1>
-        <div class="terminal">
-            <p><span class="blink">█</span> HACKED BY Karthik S Sathyan</p>
-            <p>POC for Subdomain Takeover</p>
-            <p>$ sudo rm -rf /</p>
-            <p>Access Denied: Unauthorized Access Detected</p>
+        <div class="left-panel">
+            <div class="terminal">
+                <p class="typing">root@system:~# Access Granted</p>
+                <p>$ sudo rm -rf /</p>
+                <p>Access Denied: Unauthorized Access Detected</p>
+            </div>
+        </div>
+        <div class="right-panel">
+            <h1 class="glitch-text">Subdomain Takeover Successful</h1>
+            <div class="terminal">
+                <p><span class="blink">█</span> HACKED BY Karthik S Sathyan</p>
+                <p>POC for Subdomain Takeover</p>
+                <button class="glow-button">Hack System</button>
+            </div>
         </div>
     </div>
 </body>
