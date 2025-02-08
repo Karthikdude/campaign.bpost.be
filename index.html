@@ -3,171 +3,299 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hacker-Themed Webpage</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+    <meta name="description" content="Hacked By Karthik - For Proof of Concept">
+    <meta name="author" content="Karthik">
+    <meta property="og:title" content="Hacked By Karthik - For Proof of Concept">
+    <meta property="og:image" content="https://cdn.prinsh.com/data-1/images/NathanPrinsley-AnonymousLogo.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Haxor Uploader">
+    <link rel="shortcut icon" type="image/x-icon" href="https://cdn.prinsh.com/data-1/images/NathanPrinsley-AnonymousLogo.png">
+    <title>Hacked By Karthik - For Proof of Concept</title>
     <style>
-        * {
+        body {
+            background: black;
+            color: #00eb00;
+            font-family: 'Courier New', Courier, monospace;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background-color: #000;
-            color: #00ff00;
-            font-family: 'Fira Code', monospace;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
             overflow: hidden;
+            cursor: url('https://cdn.example.com/crosshair-cursor.png'), auto;
         }
-        nav {
-            background-color: rgba(17, 17, 17, 0.9);
-            padding: 15px;
-            text-align: center;
+        body::after {
+            content: "";
             position: fixed;
-            width: 100%;
             top: 0;
-            z-index: 10;
-            backdrop-filter: blur(5px);
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+            pointer-events: none;
+            animation: flicker 0.15s infinite;
         }
-        nav a {
-            color: #00ff00;
-            margin: 0 20px;
-            text-decoration: none;
-            font-size: 1.3rem;
-            transition: 0.3s;
-        }
-        nav a:hover {
-            text-shadow: 0 0 15px #00ff00;
-            font-weight: bold;
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
         }
         .container {
-            display: flex;
-            flex: 1;
-            padding-top: 60px;
-        }
-        .left-panel, .right-panel {
-            flex: 1;
-            padding: 30px;
-            overflow-y: auto;
-        }
-        .left-panel {
-            border-right: 3px solid #00ff00;
-        }
-        .right-panel {
-            border-left: 3px solid #00ff00;
             text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
-        .terminal {
-            background-color: rgba(0, 0, 0, 0.85);
-            border: 3px solid #00ff00;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px #00ff00;
-            font-size: 1.2rem;
+        h1 {
+            font-size: 3em;
+            animation: glitch 1s infinite;
+            color: #fff;
         }
-        .typing {
+        h2 {
+            font-size: 2em;
+            animation: glitch 1s infinite;
+        }
+        .message {
+            font-size: 1.5em;
+            animation: typing 2s steps(40, end), blink-caret .75s step-end infinite;
             white-space: nowrap;
             overflow: hidden;
-            display: inline-block;
-            border-right: 3px solid #0f0;
-            animation: typing 3s steps(20) infinite alternate;
+            border-right: .15em solid #00eb00;
+            width: 0;
+        }
+        @keyframes glitch {
+            0%, 100% { text-shadow: 0.05em 0 0 red, -0.05em 0 0 blue, 0 0 0.05em green; }
+            25% { text-shadow: 0.05em 0 0 blue, -0.05em 0 0 green, 0 0 0.05em red; }
+            50% { text-shadow: 0.05em 0 0 green, -0.05em 0 0 red, 0 0 0.05em blue; }
+            75% { text-shadow: 0.05em 0 0 red, -0.05em 0 0 blue, 0 0 0.05em green; }
         }
         @keyframes typing {
             from { width: 0; }
             to { width: 100%; }
         }
-        .glitch-text {
-            animation: glitch 0.5s infinite alternate;
-            font-size: 2rem;
-            text-shadow: 0 0 5px #00ff00, 0 0 15px #00ff00;
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #00eb00; }
         }
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            25% { transform: translate(-2px, 2px); }
-            50% { transform: translate(2px, -2px); }
-            75% { transform: translate(-2px, -2px); }
-            100% { transform: translate(2px, 2px); }
+        .marquee {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #000;
+            color: #00eb00;
+            padding: 10px 0;
+            font-size: 1.2em;
+            animation: marquee 10s linear infinite;
         }
-        .glow-button {
-            border: 2px solid #0f0;
-            background: transparent;
-            color: #0f0;
-            padding: 12px 25px;
-            font-size: 20px;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: 0.3s;
-            cursor: pointer;
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
-        .glow-button:hover {
-            box-shadow: 0 0 10px #0f0, 0 0 30px #0f0;
-            transform: scale(1.05);
+        #terminal {
+            font-family: 'Courier New', Courier, monospace;
+            background: black;
+            color: #00ff00;
+            padding: 20px;
+            height: 200px;
+            overflow-y: scroll;
+            border: 2px solid #00ff00;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            width: 300px;
         }
-        .matrix-canvas {
+        #logs {
+            background: black;
+            color: lime;
+            height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid lime;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 300px;
+        }
+        #matrix {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.5;
         }
-        p {
-            font-size: 1.3rem;
-            margin: 10px 0;
+        #cursor {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: red;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .audio-container {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10001;
+        }
+        .audio-container audio {
+            display: block;
+            width: 100%;
+            height: auto;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
-    <canvas class="matrix-canvas"></canvas>
-    <nav>
-        <a href="#">Home</a>
-        <a href="#">Exploits</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-    </nav>
+    <canvas id="matrix"></canvas>
     <div class="container">
-        <div class="left-panel">
-            <div class="terminal">
-                <p class="typing">root@system:~# Access Granted</p>
-                <p>$ sudo rm -rf /</p>
-                <p>Access Denied: Unauthorized Access Detected</p>
-            </div>
-        </div>
-        <div class="right-panel">
-            <h1 class="glitch-text">Subdomain Takeover Successful</h1>
-            <div class="terminal">
-                <p><span class="blink">█</span> HACKED BY Karthik S Sathyan</p>
-                <p>POC for Subdomain Takeover</p>
-                <button class="glow-button">Hack System</button>
-            </div>
-        </div>
-    </div>
+        <img src="https://cdn.prinsh.com/data-1/images/NathanPrinsley-AnonymousLogo.png" alt="Anonymous Logo" style="width: 20%;">
+        <h1>Hacked By Karthik</h1>
+        <h2>For Proof of Concept Subdomain Takeover</h2>
+        <h2> <a href="https://karthik-s-sathyan.vercel.app" style="text-decoration: none; color: whitesmoke;">Contact</a></h2>
 
+    </div>
+    <div class="marquee">Hacked By Karthik S Sathyan- For Proof of Concept - Hacked By Karthik S Sathyan- For Proof of Concept</div>
+    <div id="terminal"></div>
+    <div id="logs"></div>
+    <div id="cursor"></div>
+    <div class="audio-container">
+        <audio id="background-audio" src="https://cdn.prinsh.com/data-1/mp3/best-hacker-music.mp3" autoplay loop></audio>
+    </div>
     <script>
-        // Matrix Effect
-        const canvas = document.querySelector('.matrix-canvas');
+        // Ensure the audio plays continuously
+        const audio = document.getElementById('background-audio');
+        audio.volume = 1.0;
+        audio.play().catch(error => {
+            console.error('Error playing audio:', error);
+        });
+
+        // Matrix Rain Effect
+        const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        const columns = Math.floor(canvas.width / 20);
-        const drops = Array(columns).fill(0);
+
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(0);
+
         const draw = () => {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#00ff00';
-            ctx.font = '15px Fira Code';
-            for (let i = 0; i < drops.length; i++) {
+            ctx.fillStyle = '#0F0';
+            ctx.font = `${fontSize}px monospace`;
+
+            drops.forEach((y, x) => {
                 const text = String.fromCharCode(0x30A0 + Math.random() * 96);
-                ctx.fillText(text, i * 20, drops[i] * 20);
-                if (drops[i] * 20 > canvas.height && Math.random() > 0.95) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
-            }
+                ctx.fillText(text, x * fontSize, y * fontSize);
+                drops[x] = y * fontSize > canvas.height && Math.random() > 0.975 ? 0 : y + 1;
+            });
         };
-        setInterval(draw, 50);
+
+        setInterval(draw, 33);
+
+        // Function to fetch and display user details in the terminal
+        async function fetchUserDetails() {
+            const terminalDiv = document.getElementById('terminal');
+            let publicIp = 'Unknown';
+
+            try {
+                // Fetch public IP using ipify
+                let ipResponse = await fetch('https://api.ipify.org?format=json');
+                if (ipResponse.ok) {
+                    let ipData = await ipResponse.json();
+                    publicIp = ipData.ip;
+                    terminalDiv.innerHTML = `<p>$ IP Address: ${publicIp}</p>`;
+                } else {
+                    throw new Error(`IP API error: ${ipResponse.statusText}`);
+                }
+            } catch (error) {
+                terminalDiv.innerHTML = `<p>$ Error fetching IP address: ${error.message}</p>`;
+                console.error('Error fetching IP address:', error);
+            }
+
+            // Attempt to fetch geolocation details using multiple APIs
+            try {
+                let geoData = await fetchGeolocationDetails(publicIp);
+                displayUserDetails(publicIp, geoData);
+            } catch (error) {
+                terminalDiv.innerHTML += `<p>$ Error fetching geolocation details: ${error.message}</p>`;
+                console.error('Error fetching geolocation details:', error);
+            }
+        }
+
+        async function fetchGeolocationDetails(ip) {
+            const apis = [
+                `https://ipinfo.io/${ip}/json`,
+                `https://freegeoip.app/json/${ip}`,
+                `https://ipapi.co/${ip}/json/`,
+                `https://api.bigdatacloud.net/data/ip-geolocation?ip=${ip}&key=YOUR_API_KEY` // Replace with your actual API key
+            ];
+
+            for (let api of apis) {
+                try {
+                    let response = await fetch(api);
+                    if (response.ok) {
+                        let data = await response.json();
+                        return data;
+                    }
+                } catch (error) {
+                    console.error(`Error with API ${api}:`, error);
+                }
+            }
+            throw new Error('All geolocation APIs failed.');
+        }
+
+        function displayUserDetails(publicIp, geoData) {
+            const terminalDiv = document.getElementById('terminal');
+            const location = [geoData.latitude || geoData.lat || 'Unknown', geoData.longitude || geoData.lon || 'Unknown'];
+            const latitude = location[0];
+            const longitude = location[1];
+            const org = geoData.org || geoData.organization || 'Unknown';
+            const city = geoData.city || 'Unknown';
+            const region = geoData.region || geoData.region_name || 'Unknown';
+            const country = geoData.country || geoData.country_name || 'Unknown';
+
+            terminalDiv.innerHTML = `
+                <p>$ IP Address: ${publicIp}</p>
+                <p>$ Location: ${latitude}, ${longitude}</p>
+                <p>$ Organization: ${org}</p>
+                <p>$ City: ${city}</p>
+                <p>$ Region: ${region}</p>
+                <p>$ Country: ${country}</p>
+            `;
+        }
+
+        // Fetch user details when the page loads
+        fetchUserDetails();
+
+        // Cursor Tracker
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.getElementById('cursor');
+            cursor.style.left = `${e.pageX}px`;
+            cursor.style.top = `${e.pageY}px`;
+        });
+
+        // Simulate captured user details in the logs div
+        const logsDiv = document.getElementById('logs');
+        const logMessages = [
+            "  $ Captured User Details ",
+            "  $ Sending to Orionate server...",
+            "  $ Extracting sensitive data...",
+            "  $ Decrypting files...",
+            "  $ Accessing database...",
+            "  $ Deploying malware...",
+            "  $ Data transfer in progress..."
+        ];
+
+        logMessages.forEach((message, index) => {
+            setTimeout(() => {
+                const logEntry = document.createElement('p');
+                logEntry.textContent = message;
+                logsDiv.appendChild(logEntry);
+                logsDiv.scrollTop = logsDiv.scrollHeight;
+            }, index * 2000); // Stagger messages every 2 seconds
+        });
     </script>
 </body>
 </html>
